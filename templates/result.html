@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Microplastic Analysis Results</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+
+            background: linear-gradient(
+                135deg,
+                #e0f7fa,
+                #e8f5e9
+            );
+
+            min-height: 100vh;
+
+            padding: 30px 15px;
+
+        }
+
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            color: #00695c;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,0.12);
+
+        }
+
+
+        .card h2 {
+
+            color: #00695c;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        /* TOTAL */
+
+        .total-box {
+
+            text-align: center;
+
+        }
+
+
+        .total-number {
+
+            font-size: 65px;
+
+            font-weight: bold;
+
+            color: #00897b;
+
+        }
+
+
+        .total-label {
+
+            color: #666;
+
+            font-size: 18px;
+
+        }
+
+
+        /* IMAGE */
+
+        .image-section {
+
+            text-align: center;
+
+        }
+
+
+        .image-section img {
+
+            width: 100%;
+
+            max-height: 600px;
+
+            object-fit: contain;
+
+            border-radius: 12px;
+
+            border: 2px solid #ddd;
+
+        }
+
+
+        /* SUMMARY */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+
+            gap: 15px;
+
+        }
+
+
+        .summary-item {
+
+            background: #f1f8f6;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            text-align: center;
+
+        }
+
+
+        .summary-item h3 {
+
+            text-transform: capitalize;
+
+            color: #555;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .summary-number {
+
+            font-size: 35px;
+
+            font-weight: bold;
+
+            color: #00897b;
+
+        }
+
+
+        /* PARTICLES */
+
+        .particle {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            background: #f7f7f7;
+
+            border-radius: 10px;
+
+        }
+
+
+        .particle-name {
+
+            font-weight: bold;
+
+        }
+
+
+        .particle-details {
+
+            text-align: right;
+
+        }
+
+
+        .confidence {
+
+            color: #00796b;
+
+            font-weight: bold;
+
+        }
+
+
+        .size {
+
+            display: block;
+
+            color: #777;
+
+            margin-top: 4px;
+
+        }
+
+
+        /* SOURCE */
+
+        .source-box {
+
+            background: #e0f2f1;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            color: #004d40;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* CONFIDENCE */
+
+        .confidence-box {
+
+            text-align: center;
+
+            padding: 20px;
+
+            background: #f5f5f5;
+
+            border-radius: 12px;
+
+        }
+
+
+        .confidence-number {
+
+            font-size: 35px;
+
+            font-weight: bold;
+
+            color: #00897b;
+
+        }
+
+
+        .confidence-level {
+
+            font-size: 18px;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* RECOMMENDATIONS */
+
+        .recommendation {
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            background: #f1f8e9;
+
+            border-left: 5px solid #66bb6a;
+
+            border-radius: 8px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* WARNING */
+
+        .warning {
+
+            background: #fff8e1;
+
+            border-left: 5px solid #ffb300;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            line-height: 1.6;
+
+            color: #5d4037;
+
+        }
+
+
+        /* BUTTON */
+
+        .back-button {
+
+            display: block;
+
+            width: 240px;
+
+            margin: 30px auto;
+
+            padding: 14px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            color: white;
+
+            background: #00897b;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+        }
+
+
+        .back-button:hover {
+
+            background: #00695c;
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <h1>
+        🔬 Microplastic Water Analysis
+    </h1>
+
+
+    <!-- TOTAL PARTICLES -->
+
+    <div class="card total-box">
+
+        <div class="total-number">
+
+            {{ total_particles }}
+
+        </div>
+
+        <div class="total-label">
+
+            Total Suspected Particles Detected
+
+        </div>
+
+    </div>
+
+
+    <!-- DETECTED IMAGE -->
+
+    <div class="card image-section">
+
+        <h2>
+            🖼️ AI Detection Result
+        </h2>
+
+        <img
+            src="{{ image }}"
+            alt="Microplastic detection result"
+        >
+
+    </div>
+
+
+    <!-- TYPE SUMMARY -->
+
+    <div class="card">
+
+        <h2>
+            📊 Particle Type Summary
+        </h2>
+
+
+        <div class="summary-grid">
+
+
+            <div class="summary-item">
+
+                <h3>Fiber</h3>
+
+                <div class="summary-number">
+
+                    {{ type_counts["fiber"] }}
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <h3>Fragment</h3>
+
+                <div class="summary-number">
+
+                    {{ type_counts["fragment"] }}
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <h3>Film</h3>
+
+                <div class="summary-number">
+
+                    {{ type_counts["film"] }}
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <h3>Pellet</h3>
+
+                <div class="summary-number">
+
+                    {{ type_counts["pellet"] }}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- PARTICLE DETAILS -->
+
+    <div class="card">
+
+        <h2>
+            🔎 Particle Details
+        </h2>
+
+
+        {% if particles %}
+
+
+            {% for particle in particles %}
+
+
+                <div class="particle">
+
+
+                    <div class="particle-name">
+
+                        {{ particle.name }}
+
+                    </div>
+
+
+                    <div class="particle-details">
+
+                        <span class="confidence">
+
+                            {{ particle.confidence }}% confidence
+
+                        </span>
+
+
+                        <span class="size">
+
+                            Relative size:
+                            {{ particle.size }}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <p>
+                No suspected particles detected.
+            </p>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- CONFIDENCE -->
+
+    <div class="card">
+
+        <h2>
+            🎯 Model Confidence
+        </h2>
+
+
+        <div class="confidence-box">
+
+
+            <div class="confidence-number">
+
+                {{ average_confidence }}%
+
+            </div>
+
+
+            <div class="confidence-level">
+
+                Overall detection level:
+                <strong>
+                    {{ confidence_level }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- POSSIBLE SOURCE -->
+
+    <div class="card">
+
+        <h2>
+            🌊 Possible Source
+        </h2>
+
+
+        <div class="source-box">
+
+            {{ possible_source }}
+
+        </div>
+
+    </div>
+
+
+    <!-- RECOMMENDATIONS -->
+
+    <div class="card">
+
+        <h2>
+            💡 Recommendations
+        </h2>
+
+
+        {% for recommendation in recommendations %}
+
+            <div class="recommendation">
+
+                ✔ {{ recommendation }}
+
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <!-- SCIENTIFIC LIMITATION -->
+
+    <div class="card">
+
+        <h2>
+            ⚠️ Important Note
+        </h2>
+
+
+        <div class="warning">
+
+            This system provides AI-based screening of suspected
+            microplastic particles from microscopic images.
+
+            The relative size shown here is based on image dimensions
+            and is not a measurement in micrometers.
+
+            Particle morphology alone cannot definitively confirm
+            that a particle is plastic or determine its exact polymer
+            or source.
+
+            For laboratory confirmation, techniques such as FTIR
+            or Raman spectroscopy can be used.
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="/" class="back-button">
+
+        ← Analyze Another Water Image
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

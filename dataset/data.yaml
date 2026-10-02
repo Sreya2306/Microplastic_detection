@@ -1,0 +1,13 @@
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 4
+names: ['fiber', 'film', 'fragment', 'pellet']
+
+roboflow:
+  workspace: project-aunby
+  project: microplastic-final-kpdl3
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/project-aunby/microplastic-final-kpdl3/dataset/2

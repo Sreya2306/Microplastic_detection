@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Microplastic Detection</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h1 {
+            color: #00695c;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .upload-box {
+            border: 2px dashed #26a69a;
+            border-radius: 15px;
+            padding: 35px 20px;
+            margin-bottom: 25px;
+            background: #f9fffe;
+        }
+
+        .upload-box p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #00897b;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #00695c;
+        }
+
+        .error {
+            color: #d32f2f;
+            margin-bottom: 15px;
+        }
+
+        .info {
+            margin-top: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🌊 Microplastic Detection</h1>
+
+    <p class="subtitle">
+        AI-Based Detection of Microplastic Particles in Water Samples
+    </p>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <div class="upload-box">
+
+            <p>Upload a microscopic image of your water sample</p>
+
+            <input
+                type="file"
+                name="image"
+                accept="image/*"
+                required
+            >
+
+        </div>
+
+        <button type="submit">
+            🔍 Detect Microplastics
+        </button>
+
+    </form>
+
+    <p class="info">
+        Supported images: JPG, JPEG, PNG
+    </p>
+
+</div>
+
+</body>
+</html>
